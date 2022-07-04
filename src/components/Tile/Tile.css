@@ -1,0 +1,70 @@
+ .tile {
+     display: grid;
+     place-content: center;
+     width: var(--tileHeight);
+     height: var(--tileHeight);
+ }
+ 
+ .white-tile {
+     background-color: #CDCDCD;
+ }
+ 
+ .black-tile {
+     background-color: #ABABAB
+ }
+ 
+ .tile .chess-piece {
+     width: var(--pieceHeight);
+     height: var(--pieceHeight);
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: var(--pieceHeight);
+ }
+ 
+ .tile .chess-piece:hover {
+     cursor: grab;
+ }
+ 
+ .tile .chess-piece:active {
+     cursor: grabbing;
+     z-index: 100;
+ }
+ 
+ .tile img {
+     width: var(--pieceHeight);
+ }
+ 
+ .numeric-notation,
+ .alphabet-notation {
+     position: absolute;
+     cursor: default;
+     z-index: 50;
+     font-size: var(--notationFont);
+ }
+ 
+ .black-tile .numeric-notation {
+     color: white;
+ }
+ 
+ .black-tile .alphabet-notation {
+     color: white;
+ }
+ 
+ .white-tile .numeric-notation,
+ .alphabet-notation {
+     color: #696868;
+ }
+ 
+ .alphabet-notation::selection,
+ .numeric-notation::selection {
+     background-color: transparent;
+ }
+ 
+ .alphabet-notation {
+     margin-top: calc(var(--tileHeight) * 0.8 - var(--notationFont));
+     margin-left: calc(var(--tileHeight) * 0.8);
+ }
+ 
+ .numeric-notation {
+     margin-left: 4px;
+ }
