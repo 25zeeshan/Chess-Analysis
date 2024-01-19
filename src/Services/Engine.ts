@@ -1,18 +1,20 @@
 import axios from "axios";
 
-export function StockFish(FEN : string, depth: number) : Promise<any>{
-    return axios.post("http://127.0.0.1:8000/stockfish/", {
-        position: FEN,
-        depth: depth
-    }).then((res: any) => {
+export async function StockFish(FEN : string, depth: number) : Promise<any>{
+    
+    try {
+        const res = await axios.post("http://13.234.105.222:5000/get_moves", {
+            position: FEN,
+            depth: depth
+        });
         return res.data;
-    }).catch(err => {
+    } catch (err) {
         console.log(err);
-    })
+    }
 }
 
 export function CustomEngine(boardArray : any, currentMove : string, fen: string, castle: number[]) : Promise<any>{
-    return axios.post("http://127.0.0.1:8000/predictMove/", {
+    return axios.post("http://13.234.105.222:5000/predictMove/", {
         gameState: boardArray,
         player : currentMove,
         fenPos: fen,

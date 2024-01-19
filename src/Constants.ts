@@ -90,20 +90,20 @@ export function ProcessBestMoves(res : any, Pieces : Piece[], currentMove: TeamT
 
     //console.log(res);
 
-    if(res[1].type === 'mate' && res[1].value === 0){
+    if(res.eval.type === 'mate' && res.eval.value === 0){
         let Move = currentMove === TeamType.OUR? [{eval: "-0.00" , move: "Black Wins"}] : [{eval: "+0.00" , move: "White Wins"}]
         return Move
-    }else if(res[1].type === "cp" && res[0].length === 0 && res[1].value === 0){
+    }else if(res.eval.type === "cp" && res.best_moves.length === 0 && res.eval.value === 0){
         let Move = [{eval: "+0.00" , move: "Stalemate"}]
         return Move;
     }
     
     var BestMoves = [];
 
-    for(let i=0;i<res[0].length ;i++){
+    for(let i=0;i<res.best_moves.length ;i++){
         let tempbestMove = {
-            eval : FindEvalForMoves(res[0][i]),
-            move : ConvertMoveToPGN(res[0][i].Move, Pieces)
+            eval : FindEvalForMoves(res.best_moves[i]),
+            move : ConvertMoveToPGN(res.best_moves[i].Move, Pieces)
         }
 
         BestMoves.push(tempbestMove);
@@ -112,6 +112,7 @@ export function ProcessBestMoves(res : any, Pieces : Piece[], currentMove: TeamT
     return BestMoves;
     
 }
+
 
 export function getBoardArray(Pieces: Piece[]){
     var ptype={
@@ -218,17 +219,18 @@ function FindEvalForMoves(move : any){
 }
 
 export function ProcessEval(res: any, currentMove: TeamType){    
+    console.log(res);
 
     var newEval="";
-    if(res[1].type === 'cp'){
-        newEval = (res[1].value >= 0)? "+" : "";
-        newEval += (res[1].value/100).toFixed(2);
-    }else if(res[1].type === 'mate'){
-        newEval = (res[1].value > 0)? "+" : "-";
-        if(res[1].value === 0){
+    if(res.eval.type === 'cp'){
+        newEval = (res.eval.value >= 0)? "+" : "";
+        newEval += (res.eval.value/100).toFixed(2);
+    }else if(res.eval.type === 'mate'){
+        newEval = (res.eval.value > 0)? "+" : "-";
+        if(res.eval.value === 0){
             newEval = currentMove === TeamType.OUR? "-" : "+"
         }
-        newEval += "M" + Math.abs(res[1].value).toString();
+        newEval += "M" + Math.abs(res.eval.value).toString();
     }
 
     return newEval;

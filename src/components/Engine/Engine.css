@@ -26,6 +26,7 @@
 #engine .radio-inputs {
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: space-evenly;
 }
 
@@ -59,6 +60,11 @@
     padding: 2px;
     font-size: 13px;
     text-align: center;
+}
+
+#engine .stockfish-image{
+    width: 50%;
+    align-self: center;
 }
 
 #engine .engine-moves-container {

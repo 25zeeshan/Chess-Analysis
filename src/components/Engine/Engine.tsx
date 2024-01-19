@@ -147,12 +147,14 @@ export default function Engine(props: any){
             <div className='engine-inputs'>
                 <div className='radio-inputs'>
                     <div className='radio selected' onClick={SelectStockfish}>Stockfish</div>
-                    <div className='radio' onClick={SelectCustom}>Custom</div>
+                    {/* <div className='radio' onClick={SelectCustom}>Custom</div> */}
+
                 </div>
-                <div className='depth-input'>
+                {/* <div className='depth-input'>
                     <label htmlFor="depth">Engine Depth </label>
                     <input type="number" min="1" max="25" name="depth" value={depth} onChange={(e) => { setDepth(parseInt(e.target.value)) }}/>
-                </div>
+                </div> */}
+                <img className='stockfish-image' src="stockfish.png" alt='stockfish' />
             </div>
 
             <div className='divider'></div>

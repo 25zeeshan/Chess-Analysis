@@ -13,25 +13,33 @@ export default function Controller(props : any){
     const [boardStates, setBoardStates] = useState<Piece[][]>([InitialBoardState]);
     const [boardStateIndex, setBoardStateIndex] = useState<number>(0);
     const location : any = useLocation();
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
+        
         if(location.state?.boardState){
+
             let SetupFEN = location.state?.FEN
             if(SetupFEN && SetupFEN !== ""){
                 const boardFromFEN = CalculatePositionFromFEN(SetupFEN);
                 const currentMoveFromFEN = SetupFEN.split(" ")[1] === 'w' ? TeamType.OUR : TeamType.OPPONENT;
                 
                 setupBoardController(boardFromFEN, currentMoveFromFEN);
+                setLoading(false);
             }else{
+                console.log('called controller'); 
                 const boardFromSetup = location.state?.boardState;
                 const currentMove = location.state?.currentMove === 'White' ? TeamType.OUR : TeamType.OPPONENT;
                 setupBoardController(boardFromSetup, currentMove);
+                setLoading(false);
             }
         }else{
             setupBoardController(InitialBoardState, TeamType.OUR);
+            setLoading(false);
         }
         
-    }, []);
+    }, [location.state?.boardState]);
 
     function setupBoardController(Pieces : Piece[], currentMove : TeamType){
         if(currentMove === TeamType.OUR){
@@ -103,7 +111,7 @@ export default function Controller(props : any){
 
             <Evaluation Eval={Eval}/>
             <Chessboard BoardController={BoardController} boardState={boardStates[boardStateIndex]} boardStateIndex={boardStateIndex}/>
-            <Engine boardState={boardStates[boardStateIndex]} boardStateIndex={boardStateIndex} HandleNavigation={HandleNavigation} updateEval={updateEval} resetAnalysis={resetAnalysis} />
+            {!loading &&<Engine boardState={boardStates[boardStateIndex]} boardStateIndex={boardStateIndex} HandleNavigation={HandleNavigation} updateEval={updateEval} resetAnalysis={resetAnalysis} />}
 
         </div>
     )

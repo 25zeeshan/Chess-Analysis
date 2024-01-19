@@ -52,5 +52,6 @@
     },
     "devDependencies": {
         "gh-pages": "^3.2.3"
-    }
+    },
+    "proxy": "http://13.234.105.222:5000"
 }
